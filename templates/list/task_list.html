@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
   <h1>Task List</h1>
+  <a href="{% url 'list:task-create' %}" class="btn btn-info link-to-page">
+    Create
+  </a>
   <ul>
     {% for task in task_list %}
       <li>
@@ -21,13 +24,13 @@
         </a>
         {% if task.progress %}
         <div class="alert alert-danger">
-          <a href="{% url 'list:task-update' pk=task.id %}" class="btn btn-danger link-to-page">
+          <a href="{% url 'list:task-undo' pk=task.id %}" class="btn btn-danger link-to-page">
           Mark undone
         </a>
         </div>
         {% else %}
         <div class="alert alert-success">
-          <a href="{% url 'list:task-update' pk=task.id %}" class="btn btn-success link-to-page">
+          <a href="{% url 'list:task-undo' pk=task.id %}" class="btn btn-success link-to-page">
           Mark done!
         </a>
         </div>
