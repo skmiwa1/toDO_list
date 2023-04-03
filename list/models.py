@@ -11,12 +11,14 @@ class Tag(models.Model):
 
 class Task(models.Model):
     content = models.TextField(max_length=511)
-    datetime = models.DateTimeField(auto_now_add=True)
-    #deadline = models.DateTimeField(auto_now_add=True, optional=True)
+    created = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateTimeField(null=True, blank=True)
     progress = models.BooleanField(default=False)
-    tag = models.ForeignKey(to=Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(to=Tag, on_delete=models.CASCADE, related_name="tasks")
 
     def __str__(self):
         return self.content
 
+    class Meta:
+        ordering = ['-progress', 'created']
 
