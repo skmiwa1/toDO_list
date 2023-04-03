@@ -4,7 +4,34 @@
   <ul>
     {% for task in task_list %}
       <li>
-        <a href="{% url 'list:task-list'  %}">{{ task.content }}</a>
+        {{ task.content }}
+        <p>Created: {{ task.created }}</p>
+        <p>Tags:
+          {% for tag in task.tag.all %}
+            {{ tag }}
+          {% empty %}
+            None
+          {% endfor %}
+        </p>
+        <a href="{% url 'list:task-update' pk=task.id %}" class="btn btn-info link-to-page">
+          Update
+        </a>
+        <a href="{% url 'list:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+          Delete
+        </a>
+        {% if task.progress %}
+        <div class="alert alert-danger">
+          <a href="{% url 'list:task-update' pk=task.id %}" class="btn btn-danger link-to-page">
+          Mark undone
+        </a>
+        </div>
+        {% else %}
+        <div class="alert alert-success">
+          <a href="{% url 'list:task-update' pk=task.id %}" class="btn btn-success link-to-page">
+          Mark done!
+        </a>
+        </div>
+        {% endif %}
 
       </li>
     {% empty %}
