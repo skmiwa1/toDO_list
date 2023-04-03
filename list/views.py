@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -49,3 +50,10 @@ class TaskCreateView(generic.CreateView):
     model = Task
     fields = "__all__"
     success_url = reverse_lazy("list:task-list")
+
+
+def task_undo(request, pk):
+    task = Task.objects.get(id=pk)
+    task.progress = not task.progress
+    task.save()
+    return HttpResponseRedirect(reverse_lazy("list:task-list"))

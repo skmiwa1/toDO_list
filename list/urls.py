@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from list.views import TaskListView, TagsListView, TagsCreateView, TagUpdateView, TagDeleteView, TaskUpdateView, \
-    TaskDeleteView, TaskCreateView
+    TaskDeleteView, TaskCreateView, task_undo
 
 urlpatterns = [
     path("", TaskListView.as_view(), name="task-list"),
@@ -16,6 +16,7 @@ urlpatterns = [
     path("task/<int:pk>/delete/", TaskDeleteView.as_view(), name="task-delete"),
 
     path("task/create/", TaskCreateView.as_view(), name="task-create"),
+    path("task/<int:pk>/complete-undo/", task_undo, name="task-undo"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
